@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, Sphere, Box, OrbitControls, Effects } from '@react-three/drei';
+import { Text, Sphere, Box, OrbitControls, Effects, Line } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { Brain, Cpu, Zap, Eye } from 'lucide-react';
 import { useEvosStore } from '../store/evosStore';
@@ -55,9 +55,9 @@ const NeuralConnection: React.FC<{ start: [number, number, number]; end: [number
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
   
   return (
-    <line geometry={geometry}>
+    <Line points={points}>
       <lineBasicMaterial color="#00ff88" opacity={activity} transparent linewidth={2} />
-    </line>
+    </Line>
   );
 };
 

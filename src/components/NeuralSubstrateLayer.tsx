@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, OrbitControls, Text } from '@react-three/drei';
+import { Points, PointMaterial, OrbitControls, Text, Line } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { Network, Activity, Layers, Zap } from 'lucide-react';
 import { useEvosStore } from '../store/evosStore';
@@ -73,7 +73,7 @@ const NeuralConnection: React.FC<{
   strength: number;
   type: 'excitatory' | 'inhibitory' | 'modulatory';
 }> = ({ start, end, strength, type }) => {
-  const lineRef = useRef<THREE.Line>(null);
+  const lineRef = useRef<any>(null);
   
   const colors = {
     excitatory: '#00ff88',
@@ -89,17 +89,16 @@ const NeuralConnection: React.FC<{
   });
   
   const points = [new THREE.Vector3(...start), new THREE.Vector3(...end)];
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
   
   return (
-    <line ref={lineRef} geometry={geometry}>
+    <Line ref={lineRef} points={points}>
       <lineBasicMaterial 
         color={colors[type]} 
         transparent 
         opacity={strength}
         linewidth={strength * 3}
       />
-    </line>
+    </Line>
   );
 };
 

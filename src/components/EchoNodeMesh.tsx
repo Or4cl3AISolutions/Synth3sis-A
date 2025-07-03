@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, Line, Text, OrbitControls } from '@react-three/drei';
 import { motion } from 'framer-motion';
-import { Globe, Wifi, Share2, Database, Sync } from 'lucide-react';
+import { Globe, Wifi, Share2, Database, RefreshCcw } from 'lucide-react';
 import { useEvosStore } from '../store/evosStore';
 import * as THREE from 'three';
 
@@ -80,7 +80,7 @@ const MeshConnection: React.FC<{
   strength: number;
   dataFlow: number;
 }> = ({ start, end, strength, dataFlow }) => {
-  const lineRef = useRef<THREE.Line>(null);
+  const lineRef = useRef<any>(null);
   
   useFrame((state) => {
     if (lineRef.current) {
@@ -90,17 +90,16 @@ const MeshConnection: React.FC<{
   });
   
   const points = [new THREE.Vector3(...start), new THREE.Vector3(...end)];
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
   
   return (
-    <line ref={lineRef} geometry={geometry}>
+    <Line ref={lineRef} points={points}>
       <lineBasicMaterial 
         color="#00ffff" 
         transparent 
         opacity={strength * 0.5}
         linewidth={2}
       />
-    </line>
+    </Line>
   );
 };
 
@@ -320,7 +319,7 @@ export const EchoNodeMesh: React.FC = () => {
               : 'bg-cyan-600 hover:bg-cyan-700'
           }`}
         >
-          <Sync className={`w-4 h-4 ${syncStatus === 'syncing' ? 'animate-spin' : ''}`} />
+          <RefreshCcw className={`w-4 h-4 ${syncStatus === 'syncing' ? 'animate-spin' : ''}`} />
           <span className="text-white text-sm">
             {syncStatus === 'syncing' ? 'Syncing...' : 
              syncStatus === 'complete' ? 'Sync Complete' : 
